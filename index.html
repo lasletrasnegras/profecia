@@ -3,63 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poemas</title>
+  <title>Profecía</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #fdf6e3;
-      color: #073642;
-      padding: 2rem;
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap');
+
+    :root {
+      --bg: #0b0b0b;
+      --text: #e6e6e6;
+      --accent: #8a0303;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    ul {
-      list-style: none;
+
+    * {
+      margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
-    li a {
-      text-decoration: none;
-      color: #268bd2;
+
+    body {
+      font-family: 'IM Fell English', serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
     }
-    li a:hover {
-      text-decoration: underline;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+    }
+
+    p {
+      max-width: 600px;
+      font-size: 1.2rem;
+      color: #d6d6d6;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🌿 Poemas</h1>
-  <ul id="poem-list">Loading...</ul>
-
-  <script>
-    const folder = 'poemas/';
-    const listContainer = document.getElementById('poem-list');
-
-    fetch(folder)
-      .then(res => res.text())
-      .then(data => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
-        const links = [...doc.links].filter(link => !link.href.endsWith('/'));
-        listContainer.innerHTML = '';
-
-        if (links.length === 0) {
-          listContainer.innerHTML = '<li>No poems found.</li>';
-        }
-
-        links.forEach(link => {
-          const filename = link.href.split('/').pop();
-          const item = document.createElement('li');
-          item.innerHTML = `<a href="${folder + filename}">${filename}</a>`;
-          listContainer.appendChild(item);
-        });
-      })
-      .catch(error => {
-        listContainer.innerHTML = '<li>Error loading poems.</li>';
-        console.error('Failed to load poems:', error);
-      });
-  </script>
+  <h1>Profecía</h1>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac ornare purus. 
+    Suspendisse potenti. In the shadows of forgotten time, whispers echo through the marble halls. 
+    Cras tempus lacus vitae velit gravida, sed dapibus neque ultricies. Praesent in venenatis nulla. 
+    Morbi scelerisque turpis vitae bibendum luctus. 🌑
+  </p>
 </body>
 </html>
 
