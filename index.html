@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poemas</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fdf6e3;
+      color: #073642;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li a {
+      text-decoration: none;
+      color: #268bd2;
+    }
+    li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌿 Poemas</h1>
+  <ul id="poem-list">Loading...</ul>
+
+  <script>
+    const folder = 'poemas/';
+    const listContainer = document.getElementById('poem-list');
+
+    fetch(folder)
+      .then(res => res.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const links = [...doc.links].filter(link => !link.href.endsWith('/'));
+        listContainer.innerHTML = '';
+
+        if (links.length === 0) {
+          listContainer.innerHTML = '<li>No poems found.</li>';
+        }
+
+        links.forEach(link => {
+          const filename = link.href.split('/').pop();
+          const item = document.createElement('li');
+          item.innerHTML = `<a href="${folder + filename}">${filename}</a>`;
+          listContainer.appendChild(item);
+        });
+      })
+      .catch(error => {
+        listContainer.innerHTML = '<li>Error loading poems.</li>';
+        console.error('Failed to load poems:', error);
+      });
+  </script>
+</body>
+</html>
 
